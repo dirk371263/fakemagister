@@ -159,6 +159,18 @@
     margin-left: 15px;
   }
   #chat-section button.logout:hover { background: #c43c3c; }
+
+  /* --- Footer --- */
+  #footer {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    font-size: 12px;
+    color: #ffffff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    pointer-events: none;
+    z-index: 999;
+  }
 </style>
 </head>
 <body>
@@ -208,6 +220,9 @@
 
 </div>
 
+<!-- Footer -->
+<div id="footer">Versie 2.1 - Made By DC Games</div>
+
 <!-- 🔥 Firebase -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
@@ -231,7 +246,6 @@
   let unsubscribeMessages = null;
   let currentUserName = null;
 
-  // Elements
   const usernameInput = document.getElementById("username");
   const emailInput = document.getElementById("email");
   const passwordInput = document.getElementById("password");
@@ -246,7 +260,6 @@
   const sendBtn = document.getElementById("sendBtn");
   const authMessage = document.getElementById("authMessage");
 
-  // Meldingen
   function showMessage(msg, type = "success") {
     authMessage.textContent = msg;
     authMessage.className = `notification ${type}`;
@@ -254,7 +267,6 @@
     setTimeout(() => authMessage.style.display = "none", 4000);
   }
 
-  // Registreer
   document.getElementById("registerBtn").onclick = () => {
     const username = usernameInput.value.trim();
     const email = emailInput.value.trim();
@@ -269,7 +281,6 @@
       .catch(err => showMessage(err.message,"error"));
   };
 
-  // Login
   document.getElementById("loginBtn").onclick = () => {
     const email = emailInput.value.trim();
     const password = passwordInput.value;
@@ -278,7 +289,6 @@
       .catch(err => showMessage(err.message,"error"));
   };
 
-  // Logout
   window.logout = () => {
     if(unsubscribeMessages) unsubscribeMessages();
     signOut(auth);
@@ -288,7 +298,6 @@
     currentUserName = null;
   };
 
-  // Auth state
   onAuthStateChanged(auth, async user => {
     if(user){
       const userDoc = await getDoc(doc(db,"users",user.uid));
@@ -303,7 +312,6 @@
     }
   });
 
-  // Create group
   window.createGroup = async () => {
     const name = groupName.value.trim();
     if(!name) return showMessage("Geef een groepsnaam op","error");
@@ -315,7 +323,6 @@
     }catch(err){ showMessage(err.message,"error"); }
   };
 
-  // Join group
   window.joinGroup = () => {
     const id = groupCodeInput.value.trim();
     if(!id) return showMessage("Plak een groep-ID","error");
@@ -323,7 +330,6 @@
     groupCodeInput.value="";
   };
 
-  // Load group messages
   async function loadGroup(groupId){
     if(unsubscribeMessages) unsubscribeMessages();
     currentGroupId = groupId;
@@ -351,7 +357,6 @@
     });
   }
 
-  // Send message
   window.sendMessage = async () => {
     const text = messageInput.value.trim();
     if(!text||!currentGroupId||!currentUserName) return;
@@ -366,21 +371,17 @@
     }catch(err){ showMessage(err.message,"error"); }
   };
 
-  // Escape HTML
   function escapeHTML(str){
     return str.replace(/[&<>"']/g, tag => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[tag]));
   }
 
-  // Enter-to-send
   messageInput.addEventListener("keydown", e => {
     if(e.key==="Enter"&&!e.shiftKey&&!sendBtn.disabled){ e.preventDefault(); sendMessage(); }
   });
 
-  // Enable/disable send button
   messageInput.addEventListener("input", checkMessageInput);
   function checkMessageInput(){ sendBtn.disabled = !messageInput.value.trim(); }
 
 </script>
 </body>
 </html>
-
