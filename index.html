@@ -1,133 +1,165 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-  <meta charset="UTF-8" />
-  <title>Vandaag - Magister</title>
-    <link rel="icon" href="https://i.postimg.cc/vZjtzb5T/Magister-6-logo.jpg" type="image/jpeg" />
-  <style>
-    /* Basis styling */
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #6a11cb, #2575fc);
-      margin: 0;
-      padding: 30px;
-      color: #333;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      min-height: 100vh;
-    }
+<meta charset="UTF-8" />
+<title>Chat App - Magister Style</title>
+<link rel="icon" href="https://i.postimg.cc/vZjtzb5T/Magister-6-logo.jpg" type="image/jpeg" />
+<style>
+  /* --- Body & Container --- */
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    margin: 0;
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+  }
 
-    #container {
-      background: #fff;
-      border-radius: 12px;
-      max-width: 600px;
-      width: 100%;
-      padding: 25px 30px;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-    }
+  #container {
+    background: rgba(255,255,255,0.95);
+    border-radius: 20px;
+    max-width: 700px;
+    width: 100%;
+    padding: 40px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+    transition: transform 0.3s;
+  }
 
-    h2, h3, h4 {
-      margin-top: 0;
-      color: #444;
-    }
+  #container:hover { transform: translateY(-5px); }
 
-    input, button {
-      font-size: 1rem;
-      border-radius: 6px;
-      border: 1.5px solid #ccc;
-      padding: 12px 15px;
-      margin-top: 12px;
-      width: 100%;
-      box-sizing: border-box;
-      transition: border-color 0.3s, box-shadow 0.3s;
-    }
-    input:focus {
-      outline: none;
-      border-color: #2575fc;
-      box-shadow: 0 0 8px rgba(37, 117, 252, 0.5);
-    }
-    button {
-      background: #2575fc;
-      color: white;
-      border: none;
-      cursor: pointer;
-      font-weight: 600;
-      transition: background-color 0.3s;
-    }
-    button:hover:not(:disabled) {
-      background: #1a52d8;
-    }
-    button:disabled {
-      background: #a0b8f7;
-      cursor: not-allowed;
-    }
+  h2, h3, h4 {
+    margin-top: 0;
+    color: #222;
+    font-weight: 600;
+  }
 
-    #chat-box {
-      border: 1.5px solid #ddd;
-      padding: 15px;
-      height: 300px;
-      overflow-y: auto;
-      background-color: #f9f9fb;
-      margin: 15px 0;
-      border-radius: 10px;
-      font-size: 0.95rem;
-      line-height: 1.4;
-    }
+  hr { border: none; height: 1px; background: #e0e0e0; margin: 20px 0; }
 
-    .message {
-      margin-bottom: 10px;
-      display: flex;
-      flex-wrap: wrap;
-    }
-    .message .email {
-      font-weight: 700;
-      color: #2575fc;
-      margin-right: 8px;
-    }
-    .message .text {
-      flex: 1;
-      white-space: pre-wrap;
-      word-break: break-word;
-      color: #333;
-    }
+  /* --- Inputs & Buttons --- */
+  input, button {
+    font-size: 1rem;
+    border-radius: 10px;
+    border: 1.5px solid #ccc;
+    padding: 12px 15px;
+    margin-top: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+  }
 
-    #currentGroup {
-      margin: 15px 0 10px 0;
-      font-weight: 600;
-      font-size: 1.1rem;
-      color: #444;
-    }
+  input:focus {
+    outline: none;
+    border-color: #2575fc;
+    box-shadow: 0 0 12px rgba(37,117,252,0.3);
+  }
 
-    /* Flexbox voor knoppen naast elkaar */
-    .inline-inputs {
-      display: flex;
-      gap: 10px;
-      margin-top: 12px;
-    }
-    .inline-inputs input {
-      flex: 1;
-      margin-top: 0;
-    }
-    .inline-inputs button {
-      flex-shrink: 0;
-      width: 140px;
-      margin-top: 0;
-    }
+  button {
+    background: #2575fc;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(37,117,252,0.3);
+    transition: all 0.3s ease;
+  }
 
-    /* Welkomsttekst */
-    #chat-section h3 {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0;
-    }
-    #chat-section h3 span {
-      color: #2575fc;
-      font-weight: 700;
-    }
+  button:hover:not(:disabled) {
+    background: #1a52d8;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(37,117,252,0.35);
+  }
 
-  </style>
+  button:disabled {
+    background: #a0b8f7;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+  }
+
+  .inline-inputs {
+    display: flex;
+    gap: 10px;
+  }
+  .inline-inputs input { flex: 1; margin-top: 0; }
+  .inline-inputs button { flex-shrink: 0; width: 150px; margin-top: 0; }
+
+  /* --- Chat Box --- */
+  #chat-box {
+    border: 1.5px solid #e0e0e0;
+    padding: 20px;
+    height: 350px;
+    overflow-y: auto;
+    background-color: rgba(245,246,250,0.8);
+    margin: 15px 0;
+    border-radius: 16px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .message {
+    margin-bottom: 12px;
+    max-width: 75%;
+    padding: 12px 16px;
+    border-radius: 18px;
+    position: relative;
+    clear: both;
+    word-wrap: break-word;
+    transition: background 0.3s;
+  }
+
+  .message.own {
+    background: #2575fc;
+    color: #fff;
+    margin-left: auto;
+    border-bottom-right-radius: 4px;
+    box-shadow: 0 2px 8px rgba(37,117,252,0.3);
+  }
+  .message.other {
+    background: #e9ecef;
+    color: #333;
+    margin-right: auto;
+    border-bottom-left-radius: 4px;
+  }
+
+  .message .meta {
+    font-size: 0.75rem;
+    opacity: 0.7;
+    margin-top: 4px;
+    display: block;
+  }
+
+  /* --- Notifications --- */
+  .notification {
+    margin-top: 10px;
+    padding: 12px 15px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    display: none;
+  }
+  .notification.success { background: #d4f8d4; color: #256029; }
+  .notification.error { background: #ffd6d6; color: #8b1c1c; }
+
+  #currentGroup {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #444;
+    margin: 15px 0 10px 0;
+  }
+
+  /* Logout button */
+  #chat-section button.logout {
+    background: #e14c4c;
+    padding: 6px 16px;
+    font-weight: 600;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    margin-left: 15px;
+  }
+  #chat-section button.logout:hover { background: #c43c3c; }
+</style>
 </head>
 <body>
 
@@ -136,37 +168,41 @@
   <!-- 🔐 Auth -->
   <div id="auth-section">
     <h2>Login of Registreer</h2>
+    <input id="username" type="text" placeholder="Gebruikersnaam (bij registratie)" />
     <input id="email" type="email" placeholder="E-mail" autocomplete="username" />
     <input id="password" type="password" placeholder="Wachtwoord" autocomplete="current-password" />
-    <button id="registerBtn" onclick="register()">Registreer</button>
-    <button id="loginBtn" onclick="login()">Login</button>
+    <div class="inline-inputs">
+      <button id="registerBtn">Registreer</button>
+      <button id="loginBtn">Login</button>
+    </div>
+    <div id="authMessage" class="notification"></div>
   </div>
 
   <!-- 💬 Chat -->
   <div id="chat-section" style="display:none;">
-    <h3>Welkom, <span id="userEmail"></span> <button onclick="logout()" style="background:#e14c4c; padding:5px 12px; font-weight:600; border-radius:6px; border:none; cursor:pointer;">Uitloggen</button></h3>
+    <h3>
+      Welkom, <span id="userName"></span>
+      <button class="logout" onclick="logout()">Uitloggen</button>
+    </h3>
 
-    <hr style="margin: 15px 0;">
+    <hr>
 
-    <h4>Maak een groep of join via code</h4>
-
+    <h4>Groepbeheer</h4>
     <div class="inline-inputs">
       <input id="groupName" placeholder="Nieuwe groepsnaam" />
       <button onclick="createGroup()">Maak Groep</button>
     </div>
-
     <div class="inline-inputs" style="margin-top: 10px;">
       <input id="groupCodeInput" placeholder="Groep-ID plakken" />
-      <button onclick="joinGroup()">Ga naar Groep</button>
+      <button onclick="joinGroup()">Join Groep</button>
     </div>
-
     <div id="currentGroup"></div>
 
     <div id="chat-box" aria-live="polite" aria-label="Chat berichten"></div>
 
     <div class="inline-inputs">
       <input id="messageInput" placeholder="Typ een bericht..." autocomplete="off" />
-      <button id="sendBtn" onclick="sendMessage()" disabled>Verstuur</button>
+      <button id="sendBtn" disabled>Verstuur</button>
     </div>
   </div>
 
@@ -175,21 +211,8 @@
 <!-- 🔥 Firebase -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-  import {
-    getAuth,
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
-    signOut,
-    onAuthStateChanged
-  } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-  import {
-    getFirestore,
-    addDoc,
-    collection,
-    query,
-    orderBy,
-    onSnapshot
-  } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+  import { getFirestore, addDoc, collection, query, orderBy, onSnapshot, getDoc, setDoc, doc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyBRyDFtkGAMxkTSvIF-GQ0tNFrVv2mC05M",
@@ -206,177 +229,157 @@
 
   let currentGroupId = null;
   let unsubscribeMessages = null;
+  let currentUserName = null;
 
-  // Elementen
+  // Elements
+  const usernameInput = document.getElementById("username");
   const emailInput = document.getElementById("email");
   const passwordInput = document.getElementById("password");
   const authSection = document.getElementById("auth-section");
   const chatSection = document.getElementById("chat-section");
-  const userEmail = document.getElementById("userEmail");
+  const userName = document.getElementById("userName");
   const chatBox = document.getElementById("chat-box");
   const messageInput = document.getElementById("messageInput");
   const groupName = document.getElementById("groupName");
   const groupCodeInput = document.getElementById("groupCodeInput");
   const currentGroup = document.getElementById("currentGroup");
   const sendBtn = document.getElementById("sendBtn");
+  const authMessage = document.getElementById("authMessage");
 
-  // Registreer functie
-  window.register = () => {
+  // Meldingen
+  function showMessage(msg, type = "success") {
+    authMessage.textContent = msg;
+    authMessage.className = `notification ${type}`;
+    authMessage.style.display = "block";
+    setTimeout(() => authMessage.style.display = "none", 4000);
+  }
+
+  // Registreer
+  document.getElementById("registerBtn").onclick = () => {
+    const username = usernameInput.value.trim();
     const email = emailInput.value.trim();
     const password = passwordInput.value;
-    if (!email || !password) {
-      alert("Vul zowel e-mail als wachtwoord in.");
-      return;
-    }
+    if (!username || !email || !password) return showMessage("Vul alles in", "error");
     createUserWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        alert("Geregistreerd!");
-        emailInput.value = "";
-        passwordInput.value = "";
+      .then(async cred => {
+        await setDoc(doc(db,"users",cred.user.uid),{username});
+        showMessage("Succesvol geregistreerd!");
+        usernameInput.value = emailInput.value = passwordInput.value = "";
       })
-      .catch(err => alert("Registratie fout: " + err.message));
+      .catch(err => showMessage(err.message,"error"));
   };
 
-  // Login functie
-  window.login = () => {
+  // Login
+  document.getElementById("loginBtn").onclick = () => {
     const email = emailInput.value.trim();
     const password = passwordInput.value;
-    if (!email || !password) {
-      alert("Vul zowel e-mail als wachtwoord in.");
-      return;
-    }
-    signInWithEmailAndPassword(auth, email, password)
-      .catch(err => alert("Login fout: " + err.message));
+    if (!email || !password) return showMessage("Vul alles in","error");
+    signInWithEmailAndPassword(auth,email,password)
+      .catch(err => showMessage(err.message,"error"));
   };
 
-  // Logout functie
+  // Logout
   window.logout = () => {
-    if (unsubscribeMessages) {
-      unsubscribeMessages();
-      unsubscribeMessages = null;
-    }
+    if(unsubscribeMessages) unsubscribeMessages();
     signOut(auth);
     currentGroupId = null;
     currentGroup.textContent = "";
     chatBox.innerHTML = "";
+    currentUserName = null;
   };
 
-  // Auth state observer
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      authSection.style.display = "none";
-      chatSection.style.display = "block";
-      userEmail.textContent = user.email;
+  // Auth state
+  onAuthStateChanged(auth, async user => {
+    if(user){
+      const userDoc = await getDoc(doc(db,"users",user.uid));
+      currentUserName = userDoc.exists()? userDoc.data().username : user.email;
+      authSection.style.display="none";
+      chatSection.style.display="block";
+      userName.textContent = currentUserName;
     } else {
-      authSection.style.display = "block";
-      chatSection.style.display = "none";
-      userEmail.textContent = "";
+      authSection.style.display="block";
+      chatSection.style.display="none";
+      userName.textContent="";
     }
   });
 
-  // Groep aanmaken
+  // Create group
   window.createGroup = async () => {
     const name = groupName.value.trim();
-    if (!name) {
-      alert("Geef een groepsnaam op.");
-      return;
-    }
-    try {
-      const groupRef = await addDoc(collection(db, "groups"), {
-        name,
-        createdAt: Date.now()
-      });
-      alert("Groep aangemaakt. Code: " + groupRef.id);
+    if(!name) return showMessage("Geef een groepsnaam op","error");
+    try{
+      const groupRef = await addDoc(collection(db,"groups"),{name,createdAt:Date.now()});
+      showMessage("Groep aangemaakt. Code: "+groupRef.id);
       groupName.value = "";
       loadGroup(groupRef.id);
-    } catch (err) {
-      alert("Fout bij aanmaken groep: " + err.message);
-    }
+    }catch(err){ showMessage(err.message,"error"); }
   };
 
-  // Groep joinen via ID
+  // Join group
   window.joinGroup = () => {
     const id = groupCodeInput.value.trim();
-    if (!id) {
-      alert("Plak een groep-ID.");
-      return;
-    }
+    if(!id) return showMessage("Plak een groep-ID","error");
     loadGroup(id);
-    groupCodeInput.value = "";
+    groupCodeInput.value="";
   };
 
-  // Chat laden en live updates ontvangen
-  function loadGroup(groupId) {
-    if (unsubscribeMessages) {
-      unsubscribeMessages();
-      unsubscribeMessages = null;
-    }
+  // Load group messages
+  async function loadGroup(groupId){
+    if(unsubscribeMessages) unsubscribeMessages();
     currentGroupId = groupId;
-    currentGroup.textContent = "In groep: " + groupId;
 
-    const messagesRef = collection(db, "groups", groupId, "messages");
-    const q = query(messagesRef, orderBy("timestamp"));
+    try{
+      const docSnap = await getDoc(doc(db,"groups",groupId));
+      currentGroup.textContent = docSnap.exists()? `In groep: ${docSnap.data().name} (${groupId})` : `In groep: ${groupId}`;
+    }catch{ currentGroup.textContent = `In groep: ${groupId}`;}
 
-    unsubscribeMessages = onSnapshot(q, snapshot => {
+    const messagesRef = collection(db,"groups",groupId,"messages");
+    const q = query(messagesRef,orderBy("timestamp"));
+
+    unsubscribeMessages = onSnapshot(q,snapshot=>{
       chatBox.innerHTML = "";
-      snapshot.forEach(doc => {
+      snapshot.forEach(doc=>{
         const msg = doc.data();
         const msgDiv = document.createElement("div");
-        msgDiv.className = "message";
-        msgDiv.innerHTML = `<span class="email">${escapeHTML(msg.user)}</span><span class="text">: ${escapeHTML(msg.text)}</span>`;
+        msgDiv.className = "message "+(msg.user===currentUserName?"own":"other");
+        msgDiv.innerHTML = `<div>${escapeHTML(msg.text)}</div>
+                            <span class="meta">${escapeHTML(msg.user)} • ${new Date(msg.timestamp).toLocaleTimeString()}</span>`;
         chatBox.appendChild(msgDiv);
       });
       chatBox.scrollTop = chatBox.scrollHeight;
-      messageInput.focus();
       checkMessageInput();
-    }, err => {
-      alert("Fout bij laden berichten: " + err.message);
     });
   }
 
-  // Bericht versturen
+  // Send message
   window.sendMessage = async () => {
     const text = messageInput.value.trim();
-    const user = auth.currentUser;
-    if (!text || !currentGroupId || !user) return;
-    try {
-      await addDoc(collection(db, "groups", currentGroupId, "messages"), {
+    if(!text||!currentGroupId||!currentUserName) return;
+    try{
+      await addDoc(collection(db,"groups",currentGroupId,"messages"),{
         text,
-        user: user.email,
+        user: currentUserName,
         timestamp: Date.now()
       });
-      messageInput.value = "";
-      sendBtn.disabled = true;
-    } catch (err) {
-      alert("Fout bij verzenden bericht: " + err.message);
-    }
+      messageInput.value="";
+      sendBtn.disabled=true;
+    }catch(err){ showMessage(err.message,"error"); }
   };
 
-  // Veiligheid: escape HTML
-  function escapeHTML(str) {
-    return str.replace(/[&<>"']/g, tag => ({
-      '&': '&amp;',
-      '<': '&lt;',
-      '>': '&gt;',
-      '"': '&quot;',
-      "'": '&#39;'
-    }[tag]));
+  // Escape HTML
+  function escapeHTML(str){
+    return str.replace(/[&<>"']/g, tag => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[tag]));
   }
 
-  // Enter-to-send functie voor berichtinput
-  messageInput.addEventListener("keydown", (e) => {
-    if (e.key === "Enter" && !e.shiftKey && !sendBtn.disabled) {
-      e.preventDefault();
-      sendMessage();
-    }
+  // Enter-to-send
+  messageInput.addEventListener("keydown", e => {
+    if(e.key==="Enter"&&!e.shiftKey&&!sendBtn.disabled){ e.preventDefault(); sendMessage(); }
   });
 
-  // Enable/disable send button op basis van input
+  // Enable/disable send button
   messageInput.addEventListener("input", checkMessageInput);
-  function checkMessageInput() {
-    sendBtn.disabled = !messageInput.value.trim();
-  }
-</script>
+  function checkMessageInput(){ sendBtn.disabled = !messageInput.value.trim(); }
 
+</script>
 </body>
 </html>
